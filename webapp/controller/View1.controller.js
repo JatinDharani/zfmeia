@@ -32,6 +32,7 @@ sap.ui.define([
 				"results": []
 			});
 			this.getView().setModel(oModel, "oDataModel");
+				this.getView().getModel("oDataModel").setSizeLimit(20000);
 			this.getView().getModel("excelData").setData({
 				"NAV_HEADER_TO_PRINT": {
 					"results": []

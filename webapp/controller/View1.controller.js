@@ -142,6 +142,9 @@ sap.ui.define([
 				this.getView().byId("show").setVisible(false);
 				this.getView().byId("uploadButton").setVisible(true);
 				this.getView().byId("condTypeBox").setVisible(false);
+					this.getView().byId("datRange").setValue("");
+			this.getView().byId("datRange1").setValue("");
+				this.getView().getModel("oDataModel").setProperty("/results", []);
 
 			} else if (s === "upload") {
 				this.getView().byId("show").setVisible(true);
@@ -150,12 +153,11 @@ sap.ui.define([
 				this.getView().byId("weeklyTable").removeSelections();
 				this.getView().byId("condTypeBox").setVisible(true);
 				this.getView().getModel("oDataModel").setProperty("/results", []);
-			 this._downloadData();
+			    this._downloadData();
 				// this._downloadData();
 
 			};
-			//	this.getView().byId("datRange").setValue("");
-			//	this.getView().byId("datRange1").setValue("");
+		
 			 
 		},
 
@@ -401,8 +403,8 @@ sap.ui.define([
 			sap.ui.core.BusyIndicator.show();
 			this.getOwnerComponent().getModel().read("/fuelSurchargeHeaderSet", {
 				urlParameters: {
-					$expand: "NAV_HEADER_TO_PRINT",
-					$inlinecount: "allpages"
+					$expand: "NAV_HEADER_TO_PRINT"
+				
 				},
 				filters: aFilters,
 				success: function (oData, oResponse) {
@@ -413,7 +415,7 @@ sap.ui.define([
 						return;
 					}
 					this.getView().getModel("oDataModel").setProperty("/results", oOutPut);
-					this.getView().byId().setCount(oOutput.length);
+					this.getView().byId("tableTitle").setText("ZFSC (Fuel Surcharge) Upload table:template Preparation( "+oOutPut.length+" )");
 				}.bind(this),
 				error: function (oError) {
 					sap.ui.core.BusyIndicator.hide();

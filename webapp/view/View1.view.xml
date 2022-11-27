@@ -207,7 +207,7 @@
 													<OverflowToolbar >
 												<content>
 										
-													<Title text="ZFSC (Fuel Surcharge) Upload table:template Preparation"/>
+													<Title id="tableTitle" text="ZFSC (Fuel Surcharge) Upload table:template Preparation"/>
 											
 											
 													<ToolbarSpacer/>

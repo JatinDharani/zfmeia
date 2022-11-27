@@ -149,13 +149,14 @@ sap.ui.define([
 				this.getView().byId("uploadButton").setVisible(false);
 				this.getView().byId("weeklyTable").removeSelections();
 				this.getView().byId("condTypeBox").setVisible(true);
+				this.getView().getModel("oDataModel").setProperty("/results", []);
+			 this._downloadData();
 				// this._downloadData();
 
 			};
 			//	this.getView().byId("datRange").setValue("");
 			//	this.getView().byId("datRange1").setValue("");
-			//	this.getView().getModel("oDataModel").setProperty("/results", []);
-			// this._downloadData();
+			 
 		},
 
 		// commented on 01/11/2022 -start

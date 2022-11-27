@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx"
+	xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:sap="http://www.sap.com/Protocols/SAPData">
+	<edmx:DataServices m:DataServiceVersion="2.0">
+		<Schema Namespace="ZGW_EIA_FUEL_SURCHARGE_SRV" xml:lang="en" sap:schema-version="1" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+			<EntityType Name="fuelSurchargeHeader" sap:content-version="1">
+				<Key><PropertyRef Name="fromDate"/><PropertyRef Name="toDate"/></Key><Property Name="fromDate" Type="Edm.String" Nullable="false" MaxLength="8" sap:unicode="false" sap:creatable="false" sap:updatable="false"
+					sap:sortable="false" sap:filterable="false"/><Property Name="toDate" Type="Edm.String" Nullable="false" MaxLength="8" sap:unicode="false" sap:creatable="false" sap:updatable="false"
+					sap:sortable="false" sap:filterable="false"/><Property Name="region" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false" sap:creatable="false" sap:updatable="false"
+					sap:sortable="false" sap:filterable="false"/><Property Name="division" Type="Edm.String" Nullable="false" MaxLength="2" sap:unicode="false" sap:creatable="false" sap:updatable="false"
+					sap:sortable="false" sap:filterable="false"/><NavigationProperty Name="NAV_HEADER_TO_PRINT" Relationship="ZGW_EIA_FUEL_SURCHARGE_SRV.HEADER_TO_PRINT" FromRole="FromRole_HEADER_TO_PRINT"
+					ToRole="ToRole_HEADER_TO_PRINT"/></EntityType>
+			<EntityType Name="regionValues" sap:content-version="1">
+				<Key><PropertyRef Name="RegionCode"/><PropertyRef Name="LanguageKey"/><PropertyRef Name="RegionDescription"/></Key><Property Name="RegionCode" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false" sap:label="EIA Region"
+					sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="LanguageKey" Type="Edm.String" Nullable="false" MaxLength="2" sap:unicode="false" sap:label="Language" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="RegionDescription" Type="Edm.String" Nullable="false" MaxLength="20" sap:unicode="false" sap:label="Char20"
+					sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/></EntityType>
+			<EntityType Name="weeklyPricesEIA" sap:content-version="1">
+				<Key><PropertyRef Name="WeekStartDate"/><PropertyRef Name="EiaRegio"/></Key><Property Name="WeekStartDate" Type="Edm.DateTime" Nullable="false" Precision="7" sap:unicode="false" sap:label="Current Date"
+					sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="WeekEndDate" Type="Edm.DateTime" Nullable="false" Precision="7" sap:unicode="false" sap:label="Current Date"
+					sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="EiaRegio" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false" sap:label="EIA Region" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="WeekPrice" Type="Edm.Decimal" Nullable="false" Precision="12" Scale="3" sap:unicode="false" sap:label="Amount"
+					sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Surcharge" Type="Edm.Decimal" Nullable="false" Precision="12" Scale="3" sap:unicode="false" sap:label="Amount"
+					sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Updateflag" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false"
+					sap:label="Boolean Variable (X=True, -=False, Space=Unknown)" sap:creatable="false" sap:updatable="false" sap:sortable="false"
+					sap:filterable="false"/></EntityType>
+			<EntityType Name="fuelSurchargeDisplay" sap:content-version="1">
+				<Key><PropertyRef Name="fuelDate"/><PropertyRef Name="weekPrice"/><PropertyRef Name="salesOrg"/></Key><Property Name="Miles" Type="Edm.String" Nullable="false" MaxLength="8" sap:unicode="false" sap:label="Miles" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="fuelDate" Type="Edm.String" Nullable="false" MaxLength="8" sap:unicode="false" sap:label="Date" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="weekPrice" Type="Edm.String" Nullable="false" MaxLength="5" sap:unicode="false" sap:label="Week Price" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="salesOrg" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Sales Org." sap:creatable="false"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="distrChannel" Type="Edm.String" Nullable="false" MaxLength="2" sap:unicode="false" sap:label="Distr. Channel"
+					sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="division" Type="Edm.String" Nullable="false" MaxLength="2" sap:unicode="false" sap:label="Division" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="shipTo" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Ship-to Party"
+					sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="supplPlant" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Supplying Plant"
+					sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="condType" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Condition type"
+					sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="amount" Type="Edm.Decimal" Nullable="false" Precision="12" Scale="3" sap:unicode="false" sap:label="Amount"
+					sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="condCurr" Type="Edm.String" Nullable="false" MaxLength="5" sap:unicode="false" sap:label="Condition Currency"
+					sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" sap:semantics="currency-code"/><Property Name="pricingUnit" Type="Edm.Decimal" Nullable="false" Precision="5" Scale="0" sap:unicode="false" sap:label="Pricing unit"
+					sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="unitOfMeasure" Type="Edm.String" Nullable="false" MaxLength="3" sap:unicode="false" sap:label="Unit of Measure"
+					sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" sap:semantics="unit-of-measure"/><Property Name="validFrom" Type="Edm.String" Nullable="false" MaxLength="8" sap:unicode="false" sap:label="Valid From" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="validTo" Type="Edm.String" Nullable="false" MaxLength="8" sap:unicode="false" sap:label="Valid To" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/></EntityType>
+			<EntityType Name="divisions" sap:content-version="1">
+				<Key><PropertyRef Name="division"/></Key><Property Name="division" Type="Edm.String" Nullable="false" MaxLength="2" sap:unicode="false" sap:creatable="false" sap:updatable="false"
+					sap:sortable="false" sap:filterable="false"/></EntityType>
+			<EntityType Name="weeklyPricesEIAUpload" sap:content-version="1">
+				<Key><PropertyRef Name="WeekStartDate"/><PropertyRef Name="EiaRegio"/></Key><Property Name="WeekStartDate" Type="Edm.DateTime" Nullable="false" Precision="7" sap:unicode="false" sap:label="Current Date"
+					sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="WeekEndDate" Type="Edm.DateTime" Nullable="false" Precision="7" sap:unicode="false" sap:label="Current Date"
+					sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="EiaRegio" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false" sap:label="EIA Region" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="WeekPrice" Type="Edm.Decimal" Nullable="false" Precision="12" Scale="3" sap:unicode="false" sap:label="Amount"
+					sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Surcharge" Type="Edm.Decimal" Nullable="false" Precision="12" Scale="3" sap:unicode="false" sap:label="Amount"
+					sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Updateflag" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false"
+					sap:label="Boolean Variable (X=True, -=False, Space=Unknown)" sap:creatable="false" sap:updatable="false" sap:sortable="false"
+					sap:filterable="false"/></EntityType>
+			<EntityType Name="weeklyPricesEIAHdr" sap:content-version="1">
+				<Key><PropertyRef Name="WeekStartDate"/></Key><Property Name="WeekStartDate" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Week Start Date"
+					sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="WeekEndDate" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Week End Date"
+					sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/><NavigationProperty Name="WeeklyPriceUpload" Relationship="ZGW_EIA_FUEL_SURCHARGE_SRV.WeeklyPriceUpload"
+					FromRole="FromRole_WeeklyPriceUpload" ToRole="ToRole_WeeklyPriceUpload"/><NavigationProperty Name="WeeklyPriceUploadMsgs" Relationship="ZGW_EIA_FUEL_SURCHARGE_SRV.WeeklyPriceUploadMsgs"
+					FromRole="FromRole_WeeklyPriceUploadMsgs" ToRole="ToRole_WeeklyPriceUploadMsgs"/></EntityType>
+			<EntityType Name="weeklyPricesEIALine" sap:content-version="1">
+				<Key><PropertyRef Name="EiaRegio"/></Key><Property Name="EiaRegio" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false" sap:label="EIA Region" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="WeekPrice" Type="Edm.Decimal" Nullable="false" Precision="12" Scale="3" sap:unicode="false" sap:label="Amount"
+					sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Surcharge" Type="Edm.Decimal" Nullable="false" Precision="12" Scale="3" sap:unicode="false" sap:label="Amount"
+					sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Updateflag" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false"
+					sap:label="Boolean Variable (X=True, -=False, Space=Unknown)" sap:creatable="false" sap:updatable="false" sap:sortable="false"
+					sap:filterable="false"/></EntityType>
+			<EntityType Name="messages" sap:content-version="1">
+				<Key><PropertyRef Name="StatusType"/><PropertyRef Name="WeekStartDate"/><PropertyRef Name="Region"/></Key><Property Name="StatusType" Type="Edm.String" Nullable="false" MaxLength="16" sap:unicode="false" sap:label="Field of length 16"
+					sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="WeekStartDate" Type="Edm.DateTime" Nullable="false" Precision="7" sap:unicode="false" sap:label="Current Date"
+					sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Region" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false" sap:label="EIA Region" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="FieldIdentifier" Type="Edm.String" Nullable="false" MaxLength="30" sap:unicode="false" sap:label="30 Characters"
+					sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="FieldValue" Type="Edm.String" Nullable="false" MaxLength="35" sap:unicode="false" sap:label="CHAR35" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="FunctionalErrorIdentifier" Type="Edm.String" Nullable="false" MaxLength="70" sap:unicode="false" sap:label="Char 70"
+					sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Description" Type="Edm.String" Nullable="false" MaxLength="70" sap:unicode="false" sap:label="Char 70" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/></EntityType>
+			<Association Name="WeeklyPriceUpload" sap:content-version="1"><End Type="ZGW_EIA_FUEL_SURCHARGE_SRV.weeklyPricesEIAHdr" Multiplicity="0..1" Role="FromRole_WeeklyPriceUpload"/><End Type="ZGW_EIA_FUEL_SURCHARGE_SRV.weeklyPricesEIALine" Multiplicity="*" Role="ToRole_WeeklyPriceUpload"/></Association>
+			<Association Name="WeeklyPriceUploadMsgs" sap:content-version="1"><End Type="ZGW_EIA_FUEL_SURCHARGE_SRV.weeklyPricesEIAHdr" Multiplicity="0..1" Role="FromRole_WeeklyPriceUploadMsgs"/><End Type="ZGW_EIA_FUEL_SURCHARGE_SRV.messages" Multiplicity="*" Role="ToRole_WeeklyPriceUploadMsgs"/></Association>
+			<Association Name="HEADER_TO_PRINT" sap:content-version="1"><End Type="ZGW_EIA_FUEL_SURCHARGE_SRV.fuelSurchargeHeader" Multiplicity="0..1" Role="FromRole_HEADER_TO_PRINT"/><End Type="ZGW_EIA_FUEL_SURCHARGE_SRV.fuelSurchargeDisplay" Multiplicity="*" Role="ToRole_HEADER_TO_PRINT"/>
+				<ReferentialConstraint>
+					<Principal Role="FromRole_HEADER_TO_PRINT"><PropertyRef Name="toDate"/><PropertyRef Name="fromDate"/></Principal>
+					<Dependent Role="ToRole_HEADER_TO_PRINT"><PropertyRef Name="validFrom"/><PropertyRef Name="validTo"/></Dependent>
+				</ReferentialConstraint>
+			</Association>
+			<EntityContainer Name="ZGW_EIA_FUEL_SURCHARGE_SRV_Entities" m:IsDefaultEntityContainer="true" sap:supported-formats="atom json xlsx"><EntitySet Name="fuelSurchargeHeaderSet" EntityType="ZGW_EIA_FUEL_SURCHARGE_SRV.fuelSurchargeHeader" sap:creatable="false"
+				sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/><EntitySet Name="regionValuesSet" EntityType="ZGW_EIA_FUEL_SURCHARGE_SRV.regionValues" sap:creatable="false" sap:updatable="false"
+				sap:deletable="false" sap:pageable="false" sap:content-version="1"/><EntitySet Name="weeklyPricesEIASet" EntityType="ZGW_EIA_FUEL_SURCHARGE_SRV.weeklyPricesEIA" sap:creatable="false" sap:updatable="false"
+				sap:deletable="false" sap:pageable="false" sap:content-version="1"/><EntitySet Name="fuelSurchargeDisplaySet" EntityType="ZGW_EIA_FUEL_SURCHARGE_SRV.fuelSurchargeDisplay" sap:creatable="false"
+				sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/><EntitySet Name="divisionsSet" EntityType="ZGW_EIA_FUEL_SURCHARGE_SRV.divisions" sap:creatable="false" sap:updatable="false"
+				sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/><EntitySet Name="weeklyPricesEIAUploadSet" EntityType="ZGW_EIA_FUEL_SURCHARGE_SRV.weeklyPricesEIAUpload" sap:creatable="false"
+				sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/><EntitySet Name="weeklyPricesEIAHdrSet" EntityType="ZGW_EIA_FUEL_SURCHARGE_SRV.weeklyPricesEIAHdr" sap:creatable="false"
+				sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/><EntitySet Name="weeklyPricesEIALineSet" EntityType="ZGW_EIA_FUEL_SURCHARGE_SRV.weeklyPricesEIALine" sap:creatable="false"
+				sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/><EntitySet Name="messagesSet" EntityType="ZGW_EIA_FUEL_SURCHARGE_SRV.messages" sap:creatable="false" sap:updatable="false"
+				sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+				<AssociationSet Name="HEADER_TO_PRINTSet" Association="ZGW_EIA_FUEL_SURCHARGE_SRV.HEADER_TO_PRINT" sap:creatable="false"
+					sap:updatable="false" sap:deletable="false" sap:content-version="1"><End EntitySet="fuelSurchargeHeaderSet" Role="FromRole_HEADER_TO_PRINT"/><End EntitySet="fuelSurchargeDisplaySet" Role="ToRole_HEADER_TO_PRINT"/></AssociationSet>
+				<AssociationSet Name="WeeklyPriceUpload_AssocSet" Association="ZGW_EIA_FUEL_SURCHARGE_SRV.WeeklyPriceUpload" sap:creatable="false"
+					sap:updatable="false" sap:deletable="false" sap:content-version="1"><End EntitySet="weeklyPricesEIAHdrSet" Role="FromRole_WeeklyPriceUpload"/><End EntitySet="weeklyPricesEIALineSet" Role="ToRole_WeeklyPriceUpload"/></AssociationSet>
+				<AssociationSet Name="WeeklyPriceUploadMsgs_AssocSet" Association="ZGW_EIA_FUEL_SURCHARGE_SRV.WeeklyPriceUploadMsgs" sap:creatable="false"
+					sap:updatable="false" sap:deletable="false" sap:content-version="1"><End EntitySet="weeklyPricesEIAHdrSet" Role="FromRole_WeeklyPriceUploadMsgs"/><End EntitySet="messagesSet" Role="ToRole_WeeklyPriceUploadMsgs"/></AssociationSet>
+			</EntityContainer><atom:link rel="self" href="https://DQF.SAP.CHEVRON.COM:44396/sap/opu/odata/sap/ZGW_EIA_FUEL_SURCHARGE_SRV/$metadata"
+				xmlns:atom="http://www.w3.org/2005/Atom"/><atom:link rel="latest-version" href="https://DQF.SAP.CHEVRON.COM:44396/sap/opu/odata/sap/ZGW_EIA_FUEL_SURCHARGE_SRV/$metadata"
+				xmlns:atom="http://www.w3.org/2005/Atom"/></Schema>
+	</edmx:DataServices>
+</edmx:Edmx>

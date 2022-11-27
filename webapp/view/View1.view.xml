@@ -1,0 +1,387 @@
+<mvc:View controllerName="com.chevron.fm.ZFMEIA.controller.View1" xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m"
+	xmlns:l="sap.ui.layout" xmlns:u="sap.ui.unified" xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form" xmlns:table="sap.ui.table">
+	<Shell id="shell">
+		<App id="app">
+			<pages>
+				<Page id="page" title="Upload / Download" showHeader="false" showFooter="true" enableScrolling="true">
+					<customHeader>
+						<Toolbar>
+							<Title text="Weekly EIA Report"/>
+							<ToolbarSpacer/>
+						</Toolbar>
+					</customHeader>
+					<content>
+						<Panel width="100%">
+							<HBox>
+								<VBox class="sapUiMediumMarginEnd">
+									<Label text="Weekly Start Date:" labelFor="datRange"/>
+									<DatePicker required="true" id="datRange"  valueFormat="dd-MM-YYYY"
+										value="{path:'excelData>/fromDate',type:'sap.ui.model.odata.type.Date',constraints:{displayFormat:'Date'},formatOptions: {pattern: 'dd-MM-yyyy',UTC: true}}"></DatePicker>
+								</VBox>
+								<VBox class="sapUiMediumMarginEnd">
+									<Label text="Weekly End Date:" labelFor="datRange1"/>
+									<DatePicker  required="true" id="datRange1" enabled="true" minDate="{path:'excelData>/fromDate',type:'sap.ui.model.odata.type.Date',constraints:{displayFormat:'Date'},formatOptions: {pattern: 'dd-MM-yyyy',UTC: true}}"
+										value="{path:'excelData>/toDate',type:'sap.ui.model.odata.type.Date',constraints:{displayFormat:'Date'},formatOptions: {pattern: 'dd-MM-yyyy',UTC: true}}"></DatePicker>
+								
+								</VBox>
+									<VBox class="sapUiMediumMarginEnd" id="condTypeBox" visible="false">
+								<Label text="Condition Type:" labelFor="cndtype" />
+								<Input value="ZFSC" id="cndtype" enabled="false" />
+									</VBox>
+								<Button text="Continue" id="continue" visible="true" type="Emphasized" press="onPressContinue" class="sapUiSmallMarginTop"/>
+									<Button text="Show Data" id="show"  visible="false" type="Emphasized" press="_downloadData" class="sapUiSmallMarginTop"/>
+							</HBox>
+						</Panel>
+						<IconTabBar id="idIconTabBarInlineMode"  select="handleTabChange" headerMode="Inline" expanded="{device>/isNoPhone}"
+							class="sapUiResponsiveContentPadding">
+							<items>
+								<IconTabFilter  text="Weekly Price Data" icon="sap-icon://appointment" key="weekly" class="sapUiMediumMarginEnd">
+									<VBox>
+										<Table id="weeklyTable" mode="MultiSelect" items="{oDataModel>/results}">
+											<headerToolbar>
+													<OverflowToolbar >
+													<content>
+												<Title text="Extract Weekly EIA Fuel Rates From EIA"/>
+											
+													<ToolbarSpacer/>
+													<Button icon="sap-icon://excel-attachment" text="Export" press="onExportWeeklyData"/>
+												
+													</content>
+													</OverflowToolbar>
+											</headerToolbar>
+											<columns>
+												<Column>
+													<Label text="Weekly Start Date"/>
+												</Column>
+												<Column>
+													<Label text="Weekly End Date"/>
+												</Column>
+												<Column>
+													<Label text="EIA Region"/>
+												</Column>
+												<Column>
+													<Label text="Weekly Price"/>
+												</Column>
+												<Column>
+													<Label text="Surcharge"/>
+												</Column>
+												<Column>
+													<Label text="Upload Status"/>
+												</Column>
+											</columns>
+											<items>
+												<ColumnListItem>
+													<cells>
+													
+														<Label text="{path:'oDataModel>WeekStartDate',type:'sap.ui.model.odata.type.Date',constraints:{displayFormat:'Date'},formatOptions: {pattern: 'dd-MMM-yyyy',UTC: true}}"/>	
+														<Label text="{path:'oDataModel>WeekEndDate',type:'sap.ui.model.odata.type.Date',constraints:{displayFormat:'Date'},formatOptions: {pattern: 'dd-MMM-yyyy',UTC: true}}"/>	
+														<Label text="{oDataModel>EiaRegio}"/>
+														<Label text="{oDataModel>WeekPrice}"/>
+														<Label text="{oDataModel>Surcharge}"/>
+														<HBox>
+														<core:Icon tooltip="{path:'oDataModel>Reviewstatus', formatter: '.onUploadStatus3'}" src="{path:'oDataModel>Reviewstatus', formatter: '.onUploadStatus1'}" color="{path:'oDataModel>Reviewstatus', formatter: '.onUploadStatus2'}"/>
+														<!--<ObjectStatus text="{oDataModel>Reviewstatus}" state="{path:'oDataModel>Reviewstatus', formatter: '.onUploadStatus'}"/>-->
+														</HBox>
+														<!--{path:'oDataModel>Reviewstatus', formatter: }"-->
+														<!--<Label text=""/>-->
+													</cells>
+												</ColumnListItem>
+											</items>
+										</Table>
+									</VBox>
+								</IconTabFilter>
+								<IconTabSeparator/>
+								<IconTabFilter text="Prepare ZFSC Upload File" icon="sap-icon://upload" key="upload">
+									<VBox>
+										<!--<Table id="resultTable" fixedLayout="true" items="{oDataModel>/results}">-->
+											
+										<!--	<headerToolbar>-->
+										<!--			<OverflowToolbar >-->
+										<!--		<content>-->
+										
+										<!--			<Title text="ZFSC (Fuel Surcharge) Upload table:template Preparation"/>-->
+											
+											
+										<!--			<ToolbarSpacer/>-->
+										<!--						<HBox>-->
+										<!--			<SearchField placeholder="Search from the list"/>-->
+										<!--			<Button text="Export" icon="sap-icon://excel-attachment" press="onDownloadResult"/>-->
+										<!--				</HBox>-->
+											
+										<!--		</content>-->
+										<!--			</OverflowToolbar>-->
+										<!--	</headerToolbar>-->
+										<!--	<columns>-->
+												<!--<Column>-->
+												<!--	<Label text="Fuel Date"/>-->
+												<!--</Column>-->
+												<!--<Column>-->
+												<!--	<Label text="Week Price"/>-->
+												<!--</Column>-->
+										<!--		<Column>-->
+										<!--			<Label text="Sales Organization" tooltip="Sales Organization"/>-->
+										<!--		</Column>-->
+										<!--		<Column>-->
+										<!--			<Label text="Distribution Channel" tooltip="Distribution Channel"/>-->
+										<!--		</Column>-->
+										<!--		<Column>-->
+										<!--			<Label text="Division" tooltip="Division"/>-->
+										<!--		</Column>-->
+										<!--		<Column>-->
+										<!--			<Label text="Ship-to-Party" tooltip="Ship-to-Party"/>-->
+										<!--		</Column>-->
+										<!--		<Column>-->
+										<!--			<Label text="Supplying Plant" tooltip="Supplying Plant"/>-->
+										<!--		</Column>-->
+												<!--<Column>-->
+												<!--	<Label text="Condition Type"/>-->
+												<!--</Column>-->
+											
+										<!--		<Column>-->
+										<!--			<Label text="Condition Currency" tooltip="Condition Currency"/>-->
+										<!--		</Column>-->
+												<!--<Column>-->
+												<!--	<Label text="Pricing Unit"/>-->
+												<!--</Column>-->
+												
+												
+										<!--		<Column >-->
+										<!--			<Label text="Valid From" tooltip="Valid From"/>-->
+										<!--		</Column>-->
+										<!--		<Column >-->
+										<!--			<Label text="Valid To" tooltip="Valid To"/>-->
+										<!--		</Column>-->
+										<!--			<Column>-->
+										<!--			<Label text="Distance from Plant" tooltip="Distance from Plant"/>-->
+										<!--		</Column>-->
+										<!--			<Column>-->
+										<!--			<Label text="Surcharge" tooltip="Surcharge"/>-->
+										<!--		</Column>-->
+										<!--			<Column>-->
+										<!--			<Label text="Amount" tooltip="Amount"/>-->
+										<!--		</Column>-->
+										<!--		<Column>-->
+										<!--			<Label text="Unit Of Measure" tooltip="Unit Of Measure"/>-->
+										<!--		</Column>-->
+										<!--		<Column>-->
+										<!--			<Label text="EIA Region Description" tooltip="EIA Region Description"/>-->
+										<!--		</Column>-->
+										<!--		<Column>-->
+										<!--			<Label text="Weekly Price" tooltip="Weekly Price"/>-->
+										<!--		</Column>-->
+										<!--	</columns>-->
+										<!--	<items>-->
+										<!--		<ColumnListItem>-->
+										<!--			<cells>-->
+														<!--<Label-->
+														<!--	text="{path:'oDataModel>fuelDate',type:'sap.ui.model.odata.type.Date',constraints:{displayFormat:'Date'},formatOptions: {pattern: 'dd/MM/yyyy',UTC: true}}"/>-->
+														<!--<Label text="{oDataModel>weekPrice}"/>-->
+										<!--				<Label text="{oDataModel>salesOrg}"/>-->
+										<!--				<Label text="{oDataModel>distrChannel}" width="2rem"/>-->
+										<!--				<Label text="{oDataModel>division}" width="2rem"/>-->
+										<!--				<Label text="{oDataModel>shipTo}"/>-->
+										<!--				<Label text="{oDataModel>supplPlant}"/>-->
+														<!--<Label text="{oDataModel>condType}"/>-->
+														
+										<!--				<Label text="{oDataModel>condCurr}"/>-->
+														<!--<Label text="{oDataModel>pricingUnit}"/>-->
+													
+										<!--				<Label width="10rem"-->
+										<!--					text="{path:'oDataModel>validFrom',type:'sap.ui.model.odata.type.Date',constraints:{displayFormat:'Date'},formatOptions: {pattern: 'dd-MMM-yyyy',UTC: true}}"/>-->
+										<!--				<Label width="10rem"-->
+										<!--					text="{path:'oDataModel>validTo',type:'sap.ui.model.odata.type.Date',constraints:{displayFormat:'Date'},formatOptions: {pattern: 'dd-MMM-yyyy',UTC: true}}"/>-->
+										<!--				<Label text="{oDataModel>Distance}" />-->
+										<!--					<Label text="{oDataModel>Surcharge}" />-->
+														
+										<!--				<Label text="{oDataModel>amount}"/>-->
+										<!--				<Label text="{oDataModel>Distanceunit}"/>-->
+										<!--				<Label text="{oDataModel>EiaRegionDesc}"/>-->
+										<!--				<Label text="{oDataModel>WeeklyPrice}"/>-->
+													
+										<!--			</cells>-->
+										<!--		</ColumnListItem>-->
+										<!--	</items>-->
+										<!--</Table>-->
+										<table:Table rows="{oDataModel>/results}" id="resultTable" >
+												<table:extension>
+													<OverflowToolbar >
+												<content>
+										
+													<Title text="ZFSC (Fuel Surcharge) Upload table:template Preparation"/>
+											
+											
+													<ToolbarSpacer/>
+																<HBox>
+													<SearchField placeholder="Search from the list" search="onSearchData"/>
+													<Button text="Export" icon="sap-icon://excel-attachment" press="onDownloadResult"/>
+														</HBox>
+			
+												</content>
+													</OverflowToolbar>
+											</table:extension>
+											<table:columns>
+												<table:Column>
+													<Label text="Sales Organization" tooltip="Sales Organization"/>
+													<table:template>
+							<Text text="oDataModel>salesOrg}" wrapping="false" />
+						</table:template>
+												</table:Column>
+												<table:Column>
+													<Label text="Distribution Channel" tooltip="Distribution Channel"/>
+													<table:template>
+							<Text text="{oDataModel>distrChannel}" wrapping="false" />
+						</table:template>
+												</table:Column>
+												<table:Column>
+													<Label text="Division" tooltip="Division"/>
+													<table:template>
+							<Text text="{oDataModel>division}" wrapping="false" />
+						</table:template>
+												</table:Column>
+												<table:Column>
+													<Label text="Ship-to-Party" tooltip="Ship-to-Party"/>
+													<table:template>
+							<Text text="{oDataModel>shipTo}" wrapping="false" />
+						</table:template>
+												</table:Column>
+												<table:Column>
+													<Label text="Supplying Plant" tooltip="Supplying Plant"/>
+													<table:template>
+							<Text text="{oDataModel>supplPlant}" wrapping="false" />
+						</table:template>
+												</table:Column>
+												<table:Column>
+													<Label text="Condition Currency" tooltip="Condition Currency"/>
+													<table:template>
+							<Text text="oDataModel>condCurr}" wrapping="false" />
+						</table:template>
+												</table:Column>
+										      	<table:Column >
+													<Label text="Valid From" tooltip="Valid From"/>
+													<table:template>
+							<Text text="{path:'oDataModel>validFrom',type:'sap.ui.model.odata.type.Date',constraints:{displayFormat:'Date'},formatOptions: {pattern: 'dd-MMM-yyyy',UTC: true}}" wrapping="false" />
+						</table:template>
+												</table:Column>
+												<table:Column >
+													<Label text="Valid To" tooltip="Valid To"/>
+													<table:template>
+							<Text text="{path:'oDataModel>validTo',type:'sap.ui.model.odata.type.Date',constraints:{displayFormat:'Date'},formatOptions: {pattern: 'dd-MMM-yyyy',UTC: true}}" wrapping="false" />
+						</table:template>
+												</table:Column>
+													<table:Column>
+													<Label text="Distance from Plant" tooltip="Distance from Plant"/>
+													<table:template>
+							<Text text="{oDataModel>Distance}" wrapping="false" />
+						</table:template>
+												</table:Column>
+													<table:Column>
+													<Label text="Surcharge" tooltip="Surcharge"/>
+													<table:template>
+							<Text text="{oDataModel>Surcharge}" wrapping="false" />
+						</table:template>
+												</table:Column>
+													<table:Column>
+													<Label text="Amount" tooltip="Amount"/>
+													<table:template>
+							<Text text="{oDataModel>amount}" wrapping="false" />
+						</table:template>
+												</table:Column>
+												<table:Column>
+													<Label text="Unit Of Measure" tooltip="Unit Of Measure"/>
+													<table:template>
+							<Text text="{oDataModel>Distanceunit}" wrapping="false" />
+						</table:template>
+												</table:Column>
+												<table:Column>
+													<Label text="EIA Region Description" tooltip="EIA Region Description"/>
+													<table:template>
+							<Text text="{oDataModel>EiaRegionDesc}" wrapping="false" />
+						</table:template>
+												</table:Column>
+												<table:Column>
+													<Label text="Weekly Price" tooltip="Weekly Price"/>
+													<table:template>
+							<Text text="{oDataModel>WeeklyPrice}" wrapping="false" />
+						</table:template>
+												</table:Column> 
+											</table:columns>
+										</table:Table>
+									</VBox>
+								</IconTabFilter>
+							</items>
+						</IconTabBar>
+						<!--				<VBox>-->
+						<!--					<HBox>-->
+						<!--						<Label text="Valid From-Valid To" labelFor="datRange"/>-->
+						<!--<DateRangeSelection width="20rem"-->
+						<!--	id="datRange"-->
+						<!--	displayFormat="ddMMyyyy"-->
+						<!--	change="handleChange"/>-->
+						<!--<ToolbarSpacer/>-->
+						<!--							<Button text="Download" icon="sap-icon://download" press="onDownloadResult"/>-->
+						<!--									</HBox>-->
+						<!--				</VBox>-->
+						<!--commented as per redeign on 01.11.2022-->
+						<!--<VBox class="sapUiSmallMargin">-->
+						<!--	<f:SimpleForm id="SimpleFormChange354" editable="true" layout="ResponsiveGridLayout" title="Upload Weekly Data" labelSpanXL="3"-->
+						<!--		labelSpanL="3" labelSpanM="3" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0"-->
+						<!--		columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false">-->
+						<!--		<f:content>-->
+						<!--			<Label text="Region"/>-->
+						<!--			<RadioButtonGroup id="selectedRadio" select="downloadWeekly" selectedIndex="-1" columns="3" width="100%" class="sapUiMediumMarginBottom">-->
+						<!--				<RadioButton text="California"/>-->
+						<!--				<RadioButton text="PADD 3 Gulf Coast"/>-->
+						<!--				<RadioButton text="PADD 5 Except CA"/>-->
+						<!--				<RadioButton text="PADD 1C Lower Atlantic"/>-->
+						<!--				<RadioButton text="PADD 4 Rocky Mountain"/>-->
+						<!--			</RadioButtonGroup>-->
+						<!--			<Label text="From Date"/>-->
+						<!--<HBox>-->
+						<!--			<DatePicker required="true"-->
+						<!--				value="{path:'excelData>/fromDate',type:'sap.ui.model.odata.type.Date',constraints:{displayFormat:'Date'},formatOptions: {pattern: 'dd/MM/yyyy',UTC: true}}">-->
+						<!--<Icon icon="sap-icon://information" press="onIconPress"/>-->
+						<!--</HBox>-->
+						<!--				 <layoutData>-->
+						<!--      <l:GridData span="XL2 L2 M2 S12"/>-->
+						<!--  </layoutData>-->
+						<!--			</DatePicker>-->
+						<!--			<Label text="To Date"  visible="false"/>-->
+						<!--			<DatePicker  visible="false"-->
+						<!--				value="{path:'excelData>/toDate',type:'sap.ui.model.odata.type.Date',constraints:{displayFormat:'Date'},formatOptions: {pattern: 'dd/MM/yyyy',UTC: true}}">-->
+						<!--				 <layoutData>-->
+						<!--      <l:GridData span="XL2 L2 M2 S12"/>-->
+						<!--  </layoutData>-->
+						<!--			</DatePicker>-->
+						<!--			<Label text="Division"/>-->
+						<!--			<ComboBox selectedKey="{excelData>/division}" required="true" items="{ path: '/DIVISIONSet'}">-->
+						<!--				<core:Item key="{division}" text="{division}"/>-->
+						<!--				 <layoutData>-->
+						<!--      <l:GridData span="XL2 L2 M2 S12"/>-->
+						<!--  </layoutData>-->
+						<!--			</ComboBox>-->
+						<!--												<Label text="File to upload"/>-->
+						<!--				<HBox>-->
+						<!--			<u:FileUploader id="fileUploader" name="myFileUpload" uploadUrl="upload/" tooltip="Upload your file to the local server"-->
+						<!--				uploadComplete="handleUploadComplete" class="sapUiSmallMarginEnd"/>-->
+						<!--				<Button icon="sap-icon://upload" text="Upload" press="handleUpload"/>-->
+						<!--				</HBox>-->
+						<!--		</f:content>-->
+						<!--	</f:SimpleForm>-->
+						<!--</VBox>-->
+					</content>
+					<footer>
+						<Bar>
+							<contentRight>
+								<Button id="uploadButton" visible="true" text="UPLOAD" icon="sap-icon://upload" type="Ghost" press="onPressSave" enabled="{= ${workListModel>/bEditable} === true}"/>
+								<!--<Button text="PRINT PREVIEW" icon="sap-icon://print" type="Ghost" press="onPressPrint"/>-->
+								<!--<Button text="EDIT" icon="sap-icon://edit" enabled="{= ${workListModel>/bEditable} === false}" type="Ghost" press="onPressEdit"/>-->
+								<!--<Button text="CLOSE" icon="sap-icon://decline" type="Reject" press="onPressClose"/>-->
+								<!--<Button text="VERIFY" type="Emphasized" press="onPressVerify" enabled="{= ${workListModel>/bEditable} === true}"/>-->
+							</contentRight>
+						</Bar>
+					</footer>
+				</Page>
+			</pages>
+		</App>
+	</Shell>
+</mvc:View>

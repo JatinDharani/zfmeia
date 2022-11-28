@@ -411,16 +411,19 @@ sap.ui.define([
 				success: function (oData, oResponse) {
 					sap.ui.core.BusyIndicator.hide();
 					var oOutPut = oData.results[0].NAV_HEADER_TO_PRINT.results;
+						this.getView().byId("tableTitle").setText("ZFSC (Fuel Surcharge) Upload table:template Preparation( "+oOutPut.length+" )");
 					if (oOutPut.length === 0) {
 						sap.m.MessageBox.information("No Data found for the selected Date Range");
 						return;
 					}
+					
 					this.getView().getModel("oDataModel").setProperty("/results", oOutPut);
-					this.getView().byId("tableTitle").setText("ZFSC (Fuel Surcharge) Upload table:template Preparation( "+oOutPut.length+" )");
+				
 				}.bind(this),
 				error: function (oError) {
 					sap.ui.core.BusyIndicator.hide();
 					sap.m.MessageBox.error("Failed to load the service. Please contact your administrator");
+					this.getView().byId("tableTitle").setText("ZFSC (Fuel Surcharge) Upload table:template Preparation( 0 )");
 				}.bind(this)
 			});
 			sap.ui.core.BusyIndicator.hide();
